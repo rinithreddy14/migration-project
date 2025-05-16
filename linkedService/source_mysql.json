@@ -5,14 +5,14 @@
 		"annotations": [],
 		"type": "MySql",
 		"typeProperties": {
-			"server": "mysql.local",
+			"server": "192.168.200.200",
 			"port": 3306,
 			"database": "migration_database",
-			"username": "root",
+			"username": "rinith",
 			"sslMode": 1,
 			"useSystemTrustStore": 0,
 			"driverVersion": "v2",
-			"encryptedCredential": "eyJDcmVkZW50aWFsSWQiOiJmYzJkNDdiMC00ZWI1LTRkZjQtOGZhYy00ZGU4ZWNhZTI2ZDMiLCJWZXJzaW9uIjoiMi4wIiwiQ2xhc3NUeXBlIjoiTWljcm9zb2Z0LkRhdGFQcm94eS5Db3JlLkludGVyU2VydmljZURhdGFDb250cmFjdC5DcmVkZW50aWFsU1UwNkNZMTQifQ=="
+			"encryptedCredential": "eyJDcmVkZW50aWFsSWQiOiIzMjUwZDRmYy1kNzQ4LTQ3ZmUtODM4ZS00NjE0NDY1NWI2MGMiLCJWZXJzaW9uIjoiMi4wIiwiQ2xhc3NUeXBlIjoiTWljcm9zb2Z0LkRhdGFQcm94eS5Db3JlLkludGVyU2VydmljZURhdGFDb250cmFjdC5DcmVkZW50aWFsU1UwNkNZMTQifQ=="
 		},
 		"connectVia": {
 			"referenceName": "mysql-intergration-runtime",
