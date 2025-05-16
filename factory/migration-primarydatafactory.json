@@ -1,0 +1,9 @@
+{
+	"name": "migration-primarydatafactory",
+	"location": "eastus",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "116eb6c1-5603-4961-8821-5d5d82b1ff76",
+		"tenantId": "f7216851-9539-44b5-b4a4-f4137eabc9a1"
+	}
+}
