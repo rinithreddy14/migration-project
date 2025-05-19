@@ -1,0 +1,17 @@
+{
+	"name": "source_mysql",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "source_mysql",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"tableName": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"type": "MySqlTable",
+		"schema": []
+	}
+}
