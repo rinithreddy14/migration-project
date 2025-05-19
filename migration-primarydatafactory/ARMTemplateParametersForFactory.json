@@ -1,0 +1,27 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"value": "migration-primarydatafactory"
+		},
+		"Storage_destination_accountKey": {
+			"value": ""
+		},
+		"source_mysql_password": {
+			"value": ""
+		},
+		"Storage_destination_properties_typeProperties_url": {
+			"value": "https://migrationprimarystorage.dfs.core.windows.net/"
+		},
+		"source_mysql_properties_typeProperties_server": {
+			"value": "192.168.200.200"
+		},
+		"source_mysql_properties_typeProperties_database": {
+			"value": "migration_database"
+		},
+		"source_mysql_properties_typeProperties_username": {
+			"value": "rinith"
+		}
+	}
+}
