@@ -5,6 +5,9 @@
 			"referenceName": "source_mysql",
 			"type": "LinkedServiceReference"
 		},
+		"folder": {
+			"name": "source"
+		},
 		"annotations": [],
 		"type": "MySqlTable",
 		"schema": [],

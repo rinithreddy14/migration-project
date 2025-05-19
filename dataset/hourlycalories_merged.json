@@ -1,5 +1,5 @@
 {
-	"name": "minuteintensitiesnarrow_merged",
+	"name": "hourlycalories_merged",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "source_mysql",
@@ -12,7 +12,7 @@
 		"type": "MySqlTable",
 		"schema": [],
 		"typeProperties": {
-			"tableName": "`minuteintensitiesnarrow_merged`"
+			"tableName": "`hourlycalories_merged`"
 		}
 	}
 }

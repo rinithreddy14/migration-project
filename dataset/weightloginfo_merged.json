@@ -1,5 +1,5 @@
 {
-	"name": "minuteintensitiesnarrow_merged",
+	"name": "weightloginfo_merged",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "source_mysql",
@@ -12,7 +12,7 @@
 		"type": "MySqlTable",
 		"schema": [],
 		"typeProperties": {
-			"tableName": "`minuteintensitiesnarrow_merged`"
+			"tableName": "`weightloginfo_merged`"
 		}
 	}
 }
