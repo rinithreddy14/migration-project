@@ -1,0 +1,15 @@
+{
+	"name": "hourlyintensities_merged",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "source_mysql",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "MySqlTable",
+		"schema": [],
+		"typeProperties": {
+			"tableName": "`hourlyintensities_merged`"
+		}
+	}
+}
