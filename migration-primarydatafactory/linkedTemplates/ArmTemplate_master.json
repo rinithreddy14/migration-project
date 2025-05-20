@@ -15,6 +15,10 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'password' of 'source_mysql'"
 		},
+		"AzureSynapseArtifacts1_properties_typeProperties_endpoint": {
+			"type": "string",
+			"defaultValue": "https://migration-synapse.dev.azuresynapse.net"
+		},
 		"Storage_destination_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://migrationprimarystorage.dfs.core.windows.net/"
@@ -63,6 +67,9 @@
 					},
 					"source_mysql_password": {
 						"value": "[parameters('source_mysql_password')]"
+					},
+					"AzureSynapseArtifacts1_properties_typeProperties_endpoint": {
+						"value": "[parameters('AzureSynapseArtifacts1_properties_typeProperties_endpoint')]"
 					},
 					"Storage_destination_properties_typeProperties_url": {
 						"value": "[parameters('Storage_destination_properties_typeProperties_url')]"

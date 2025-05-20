@@ -15,6 +15,10 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'password' of 'source_mysql'"
 		},
+		"AzureSynapseArtifacts1_properties_typeProperties_endpoint": {
+			"type": "string",
+			"defaultValue": "https://migration-synapse.dev.azuresynapse.net"
+		},
 		"Storage_destination_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://migrationprimarystorage.dfs.core.windows.net/"
@@ -156,6 +160,61 @@
 								}
 							]
 						}
+					},
+					{
+						"name": "Get Metadata1",
+						"type": "GetMetadata",
+						"dependsOn": [
+							{
+								"activity": "ForEach1",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataset": {
+								"referenceName": "bronze_pointer",
+								"type": "DatasetReference",
+								"parameters": {}
+							},
+							"fieldList": [
+								"childItems"
+							],
+							"storeSettings": {
+								"type": "AzureBlobFSReadSettings",
+								"recursive": true,
+								"enablePartitionDiscovery": false
+							},
+							"formatSettings": {
+								"type": "DelimitedTextReadSettings"
+							}
+						}
+					},
+					{
+						"name": "Notebook1",
+						"type": "SynapseNotebook",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"snapshot": true,
+							"conf": {}
+						}
 					}
 				],
 				"policy": {
@@ -165,7 +224,97 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/source_mysql')]",
+				"[concat(variables('factoryId'), '/datasets/bronze_pointer')]",
 				"[concat(variables('factoryId'), '/datasets/destination')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/bronze_pointer')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "Storage_destination",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"folderPath": "bronze",
+						"fileSystem": "migration-storage"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"name": "1503960366",
+						"type": "String"
+					},
+					{
+						"name": "3/25/2016",
+						"type": "String"
+					},
+					{
+						"name": "11004",
+						"type": "String"
+					},
+					{
+						"name": "7.11000013351439993",
+						"type": "String"
+					},
+					{
+						"name": "7.11000013351439994",
+						"type": "String"
+					},
+					{
+						"name": "05",
+						"type": "String"
+					},
+					{
+						"name": "2.5699999332428001",
+						"type": "String"
+					},
+					{
+						"name": "0.46000000834464999",
+						"type": "String"
+					},
+					{
+						"name": "4.0700001716613796",
+						"type": "String"
+					},
+					{
+						"name": "09",
+						"type": "String"
+					},
+					{
+						"name": "33",
+						"type": "String"
+					},
+					{
+						"name": "12",
+						"type": "String"
+					},
+					{
+						"name": "205",
+						"type": "String"
+					},
+					{
+						"name": "804",
+						"type": "String"
+					},
+					{
+						"name": "1819",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/Storage_destination')]"
 			]
 		},
 		{
@@ -228,6 +377,21 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/AzureSynapseArtifacts1')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureSynapseArtifacts",
+				"typeProperties": {
+					"endpoint": "[parameters('AzureSynapseArtifacts1_properties_typeProperties_endpoint')]",
+					"authentication": "MSI",
+					"workspaceResourceId": "/subscriptions/53950742-1b6b-4856-b5b5-99d78044db65/resourceGroups/main-resource/providers/Microsoft.Synapse/workspaces/migration-synapse"
+				}
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/Storage_destination')]",
 			"type": "Microsoft.DataFactory/factories/linkedServices",
 			"apiVersion": "2018-06-01",
@@ -240,6 +404,20 @@
 						"type": "SecureString",
 						"value": "[parameters('Storage_destination_accountKey')]"
 					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/SynapseWorkspace1')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "SynapseWorkspace",
+				"typeProperties": {
+					"workspaceName": "migration-synapse",
+					"authenticationType": "ManagedServiceIdentity"
 				}
 			},
 			"dependsOn": []

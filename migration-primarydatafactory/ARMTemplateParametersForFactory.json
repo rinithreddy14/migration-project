@@ -11,6 +11,9 @@
 		"source_mysql_password": {
 			"value": ""
 		},
+		"AzureSynapseArtifacts1_properties_typeProperties_endpoint": {
+			"value": "https://migration-synapse.dev.azuresynapse.net"
+		},
 		"Storage_destination_properties_typeProperties_url": {
 			"value": "https://migrationprimarystorage.dfs.core.windows.net/"
 		},
