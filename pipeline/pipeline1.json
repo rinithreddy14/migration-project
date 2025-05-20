@@ -21,10 +21,7 @@
 					},
 					"dataset": {
 						"referenceName": "source_mysql",
-						"type": "DatasetReference",
-						"parameters": {
-							"tableName": "''"
-						}
+						"type": "DatasetReference"
 					},
 					"firstRowOnly": false
 				}
@@ -64,7 +61,7 @@
 								"source": {
 									"type": "MySqlSource",
 									"query": {
-										"value": "@concat('select * from',item().name)",
+										"value": "@concat('select * from ',item().name)",
 										"type": "Expression"
 									}
 								},
@@ -92,13 +89,7 @@
 							"inputs": [
 								{
 									"referenceName": "source_mysql",
-									"type": "DatasetReference",
-									"parameters": {
-										"tableName": {
-											"value": "@item().name",
-											"type": "Expression"
-										}
-									}
+									"type": "DatasetReference"
 								}
 							],
 							"outputs": [
@@ -146,11 +137,79 @@
 					],
 					"storeSettings": {
 						"type": "AzureBlobFSReadSettings",
+						"recursive": true,
 						"enablePartitionDiscovery": false
 					},
 					"formatSettings": {
 						"type": "DelimitedTextReadSettings"
 					}
+				}
+			},
+			{
+				"name": "ForEach2",
+				"type": "ForEach",
+				"dependsOn": [
+					{
+						"activity": "Get Metadata1",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@activity('Get Metadata1').output.childItems",
+						"type": "Expression"
+					},
+					"isSequential": false,
+					"activities": [
+						{
+							"name": "Notebook2",
+							"type": "SynapseNotebook",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "0.12:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"notebook": {
+									"referenceName": {
+										"value": "bronze to sliver",
+										"type": "Expression"
+									},
+									"type": "NotebookReference"
+								},
+								"parameters": {
+									"fileName": {
+										"value": "@item().name",
+										"type": "string"
+									}
+								},
+								"snapshot": true,
+								"sparkPool": {
+									"referenceName": {
+										"value": "firstsparkpool",
+										"type": "Expression"
+									},
+									"type": "BigDataPoolReference"
+								},
+								"executorSize": "Small",
+								"conf": {
+									"spark.dynamicAllocation.enabled": false
+								},
+								"driverSize": "Small"
+							},
+							"linkedServiceName": {
+								"referenceName": "AzureSynapseArtifacts1",
+								"type": "LinkedServiceReference"
+							}
+						}
+					]
 				}
 			}
 		],
