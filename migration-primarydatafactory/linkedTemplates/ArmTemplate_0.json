@@ -259,11 +259,6 @@
 					"referenceName": "source_mysql",
 					"type": "LinkedServiceReference"
 				},
-				"parameters": {
-					"tableName": {
-						"type": "string"
-					}
-				},
 				"annotations": [],
 				"type": "MySqlTable",
 				"schema": [],
@@ -299,9 +294,7 @@
 							"dataset": {
 								"referenceName": "source_mysql",
 								"type": "DatasetReference",
-								"parameters": {
-									"tableName": "''"
-								}
+								"parameters": {}
 							},
 							"firstRowOnly": false
 						}
@@ -341,7 +334,7 @@
 										"source": {
 											"type": "MySqlSource",
 											"query": {
-												"value": "@concat('select * from',item().name)",
+												"value": "@concat('select * from ',item().name)",
 												"type": "Expression"
 											}
 										},
@@ -370,12 +363,7 @@
 										{
 											"referenceName": "source_mysql",
 											"type": "DatasetReference",
-											"parameters": {
-												"tableName": {
-													"value": "@item().name",
-													"type": "Expression"
-												}
-											}
+											"parameters": {}
 										}
 									],
 									"outputs": [
@@ -433,20 +421,73 @@
 						}
 					},
 					{
-						"name": "Notebook1",
-						"type": "SynapseNotebook",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
+						"name": "ForEach2",
+						"type": "ForEach",
+						"dependsOn": [
+							{
+								"activity": "Get Metadata1",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
 						"userProperties": [],
 						"typeProperties": {
-							"snapshot": true,
-							"conf": {}
+							"items": {
+								"value": "@activity('Get Metadata1').output.childItems",
+								"type": "Expression"
+							},
+							"isSequential": false,
+							"activities": [
+								{
+									"name": "Notebook2",
+									"type": "SynapseNotebook",
+									"dependsOn": [],
+									"policy": {
+										"timeout": "0.12:00:00",
+										"retry": 0,
+										"retryIntervalInSeconds": 30,
+										"secureOutput": false,
+										"secureInput": false
+									},
+									"userProperties": [],
+									"typeProperties": {
+										"notebook": {
+											"referenceName": {
+												"value": "bronze to sliver",
+												"type": "Expression"
+											},
+											"type": "NotebookReference"
+										},
+										"parameters": {
+											"fileName": {
+												"value": {
+													"value": "@item().name",
+													"type": "Expression"
+												},
+												"type": "string"
+											}
+										},
+										"snapshot": true,
+										"sparkPool": {
+											"referenceName": {
+												"value": "firstsparkpool",
+												"type": "Expression"
+											},
+											"type": "BigDataPoolReference"
+										},
+										"executorSize": "Small",
+										"conf": {
+											"spark.dynamicAllocation.enabled": false
+										},
+										"driverSize": "Small"
+									},
+									"linkedServiceName": {
+										"referenceName": "AzureSynapseArtifacts1",
+										"type": "LinkedServiceReference"
+									}
+								}
+							]
 						}
 					}
 				],
@@ -458,7 +499,8 @@
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/source_mysql')]",
 				"[concat(variables('factoryId'), '/datasets/bronze_pointer')]",
-				"[concat(variables('factoryId'), '/datasets/destination')]"
+				"[concat(variables('factoryId'), '/datasets/destination')]",
+				"[concat(variables('factoryId'), '/linkedServices/AzureSynapseArtifacts1')]"
 			]
 		}
 	]
