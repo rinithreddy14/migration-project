@@ -1,0 +1,11 @@
+{
+	"name": "SynapseWorkspace1",
+	"properties": {
+		"annotations": [],
+		"type": "SynapseWorkspace",
+		"typeProperties": {
+			"workspaceName": "migration-synapse",
+			"authenticationType": "ManagedServiceIdentity"
+		}
+	}
+}
