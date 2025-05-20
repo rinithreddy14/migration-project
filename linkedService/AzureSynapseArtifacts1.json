@@ -1,0 +1,12 @@
+{
+	"name": "AzureSynapseArtifacts1",
+	"properties": {
+		"annotations": [],
+		"type": "AzureSynapseArtifacts",
+		"typeProperties": {
+			"endpoint": "https://migration-synapse.dev.azuresynapse.net",
+			"authentication": "MSI",
+			"workspaceResourceId": "/subscriptions/53950742-1b6b-4856-b5b5-99d78044db65/resourceGroups/main-resource/providers/Microsoft.Synapse/workspaces/migration-synapse"
+		}
+	}
+}
