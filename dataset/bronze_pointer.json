@@ -1,0 +1,84 @@
+{
+	"name": "bronze_pointer",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "Storage_destination",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"folderPath": "bronze",
+				"fileSystem": "migration-storage"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "1503960366",
+				"type": "String"
+			},
+			{
+				"name": "3/25/2016",
+				"type": "String"
+			},
+			{
+				"name": "11004",
+				"type": "String"
+			},
+			{
+				"name": "7.11000013351439993",
+				"type": "String"
+			},
+			{
+				"name": "7.11000013351439994",
+				"type": "String"
+			},
+			{
+				"name": "05",
+				"type": "String"
+			},
+			{
+				"name": "2.5699999332428001",
+				"type": "String"
+			},
+			{
+				"name": "0.46000000834464999",
+				"type": "String"
+			},
+			{
+				"name": "4.0700001716613796",
+				"type": "String"
+			},
+			{
+				"name": "09",
+				"type": "String"
+			},
+			{
+				"name": "33",
+				"type": "String"
+			},
+			{
+				"name": "12",
+				"type": "String"
+			},
+			{
+				"name": "205",
+				"type": "String"
+			},
+			{
+				"name": "804",
+				"type": "String"
+			},
+			{
+				"name": "1819",
+				"type": "String"
+			}
+		]
+	}
+}
