@@ -186,7 +186,10 @@
 								},
 								"parameters": {
 									"fileName": {
-										"value": "@item().name",
+										"value": {
+											"value": "@item().name",
+											"type": "Expression"
+										},
 										"type": "string"
 									}
 								},
@@ -200,7 +203,7 @@
 								},
 								"executorSize": "Small",
 								"conf": {
-									"spark.dynamicAllocation.enabled": false
+									"spark.dynamicAllocation.enabled": true
 								},
 								"driverSize": "Small"
 							},
