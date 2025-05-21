@@ -16,13 +16,15 @@
 			"location": {
 				"type": "AzureBlobFSLocation",
 				"fileName": {
-					"value": "@{concat(dataset().tableName,'.parquet')}",
+					"value": "@{concat(dataset().tableName,'.csv')}",
 					"type": "Expression"
 				},
 				"folderPath": "bronze",
 				"fileSystem": "migration-storage"
 			},
-			"escapeChar": "\\"
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"quoteChar": "\""
 		},
 		"schema": []
 	}
